@@ -21,5 +21,35 @@ public class purchaseStepDefs {
     @When("User adds {string} from {string}")
     public void user_adds_from(String product, String category) {
        expectedPurchaseAmount+= adidasPage.productAdder(category,product);
+        System.out.println("expectedPurchaseAmount = " + expectedPurchaseAmount);
     }
+
+    @When("User removes {string} from cart")
+    public void user_removes_from_cart(String product) {
+       expectedPurchaseAmount-=adidasPage.productRemover(product);
+        System.out.println("expectedPurchaseAmount = " + expectedPurchaseAmount);
+    }
+
+    @When("User places order and captures and logs purchase ID and Amount")
+    public void user_places_order_and_captures_and_logs_purchase_id_and_amount() {
+        adidasPage.cart.click();
+        adidasPage.placeOrder.click();
+
+        adidasPage.fillForm();
+        adidasPage.purchaseButton.click();
+
+        String confirmation = adidasPage.confirmation.getText();
+        System.out.println("confirmation = " + confirmation);
+
+        String [] confirmationArray = confirmation.split(" \n ");
+
+
+
+
+    }
+    @When("User verifies purchase amount equals expected")
+    public void user_verifies_purchase_amount_equals_expected() {
+
+    }
+
 }

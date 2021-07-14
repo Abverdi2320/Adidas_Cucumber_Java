@@ -1,5 +1,6 @@
 package pages;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -23,6 +24,44 @@ public class AdidasPage {
     @FindBy(xpath = "(//a[@class='nav-link'])[1]")
     public WebElement homeLink;
 
+    @FindBy(xpath = "//a[.='Cart']")
+    public WebElement  cart;
+
+    @FindBy(xpath = "//table//tr//td[.='Dell i7 8gb']/..//td[.='Delete']/a")
+    public WebElement Delete;
+
+
+    @FindBy(xpath = "//button[.='Place Order']")
+    public WebElement placeOrder;
+    @FindBy(id = "name")
+    public WebElement name;
+
+    @FindBy(id = "country")
+    public WebElement country;
+
+    @FindBy(id = "city")
+    public WebElement city;
+
+    @FindBy(id = "card")
+    public WebElement card;
+
+    @FindBy(id = "month")
+    public WebElement month;
+
+    @FindBy(id = "year")
+    public WebElement year;
+
+    @FindBy(xpath = "//button[.='Purchase']")
+    public WebElement purchaseButton;
+
+    @FindBy(xpath = "//p[@class='lead text-muted ']")
+    public WebElement confirmation;
+
+
+
+
+
+
 
     public int productAdder(String category, String product){
         Driver.getDriver().findElement(By.xpath("//a[.='"+category+"']")).click();
@@ -45,6 +84,22 @@ public class AdidasPage {
 
         return amount;
 
+    }
+
+    public int productRemover(String product){
+        int amount = Integer.parseInt(Driver.getDriver().findElement(By.xpath("//tbody//tr//td[.='"+product+"']/..//td[3]")).getText());
+        Driver.getDriver().findElement(By.xpath("//table//tr//td[.='"+product+"']/..//td[.='Delete']/a")).click();
+        BrowserUtils.sleep(3);
+        return amount;
+    }
+    public void fillForm() {
+        Faker faker = new Faker();
+        name.sendKeys(faker.name().fullName());
+        country.sendKeys(faker.country().name());
+        city.sendKeys(faker.country().capital());
+        card.sendKeys(faker.finance().creditCard());
+        month.sendKeys(String.valueOf(faker.number().numberBetween(1,12)));
+        year.sendKeys(String.valueOf(faker.number().numberBetween(2022,2030)));
 
     }
 
